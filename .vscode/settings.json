@@ -1,7 +1,11 @@
 {
     "files.associations": {
         "adc.h": "c",
-        "adc_types.h": "c"
+        "adc_types.h": "c",
+        "esp_err.h": "c"
     },
-    "idf.adapterTargetName": "esp32s3"
+    "idf.adapterTargetName": "esp32s3",
+    "idf.openOcdConfigs": [
+        "board/esp32s3-bridge.cfg"
+    ]
 }

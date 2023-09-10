@@ -5,10 +5,11 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/home/daniyal/esp/esp-idf/components/driver/include",
-                "/home/daniyal/esp/esp-idf/components/hal/include"
+                "/home/daniyal/esp/esp-idf/components/hal/include",
+                "/home/daniyal/esp/esp-idf/components/esp_common/include"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "/home/daniyal/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch5-8.4.0/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc",
             "cStandard": "c17",
             "cppStandard": "gnu++17",
             "intelliSenseMode": "linux-gcc-x64",

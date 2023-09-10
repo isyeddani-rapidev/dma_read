@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/daniyal/Daniyal/ESP32/dma_read/build/CMakeFiles/bootloader
+/home/daniyal/Daniyal/ESP32/dma_read/build/CMakeFiles/bootloader.rule
+/home/daniyal/Daniyal/ESP32/dma_read/build/CMakeFiles/bootloader-complete.rule
+/home/daniyal/Daniyal/ESP32/dma_read/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/daniyal/Daniyal/ESP32/dma_read/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/daniyal/Daniyal/ESP32/dma_read/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/daniyal/Daniyal/ESP32/dma_read/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/daniyal/Daniyal/ESP32/dma_read/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/daniyal/Daniyal/ESP32/dma_read/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/daniyal/Daniyal/ESP32/dma_read/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "adc.h": "c",
+        "adc_types.h": "c"
+    },
+    "idf.adapterTargetName": "esp32s3"
+}

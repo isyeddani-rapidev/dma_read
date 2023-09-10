@@ -13,7 +13,7 @@
 #include "freertos/semphr.h"
 #include "driver/adc.h"
 
-#define TIMES 256
+#define TIMES 1024
 #define SOC_ADC_DIGI_MAX_BITWIDTH (12)
 
 #define ADC_RESULT_BYTE 4
@@ -26,23 +26,23 @@ static uint16_t adc1_chan_mask = BIT(3);
 static void continuous_adc_init(uint16_t adc1_chan_mask)
 {
     adc_digi_init_config_t adc_dma_config = {
-        .max_store_buf_size = 1024,
-        .conv_num_each_intr = 10,
+        .max_store_buf_size = 1024 * 4,
+        .conv_num_each_intr = TIMES,
         .adc1_chan_mask = adc1_chan_mask,
         .adc2_chan_mask = 0,
     };
-    printf("Mask: %u",adc_dma_config.adc1_chan_mask);
+    printf("Mask: %u", adc_dma_config.adc1_chan_mask);
     ESP_ERROR_CHECK(adc_digi_initialize(&adc_dma_config));
 
     adc_digi_configuration_t dig_cfg = {
-        .conv_limit_en = 1,
-        .conv_limit_num = 1,
-        .sample_freq_hz = 1000,
+        .conv_limit_en = 0,
+        .conv_limit_num = 0,
+        .sample_freq_hz = 16000,
         .conv_mode = ADC_CONV_MODE,
         .format = ADC_OUTPUT_TYPE,
     };
 
-    adc_digi_pattern_config_t adc_pattern[SOC_ADC_PATT_LEN_MAX] = {0};
+    adc_digi_pattern_config_t adc_pattern[1] = {0};
     dig_cfg.pattern_num = 1;
     for (int i = 0; i < 1; i++)
     {
@@ -74,22 +74,34 @@ void app_main(void)
     esp_err_t ret;
     uint32_t ret_num = 0;
     uint8_t result[TIMES] = {0};
+    uint16_t Data[TIMES / 4] = {0};
+    adc_digi_output_data_t *p;
+    uint16_t count = 0;
+    uint8_t loop = 0;
     continuous_adc_init(adc1_chan_mask);
+    gpio_pad_select_gpio(8);
+    gpio_set_direction(8, GPIO_MODE_OUTPUT);
+    vTaskDelay(200);
+    gpio_set_level(8, 1);
+    gpio_set_level(8, 0);
     adc_digi_start();
-    // vTaskDelay(1000);
-    ret = adc_digi_read_bytes(result, TIMES, &ret_num, ADC_MAX_DELAY);
-    printf("Task: %x, Read: %u\n", ret, ret_num);
-    for (int i = 0; i < ret_num; i++)
+    vTaskDelay(6);
+    while (loop <= 10)
     {
-        adc_digi_output_data_t *p = (void *)&result[i];
-        if (check_valid_data(p))
-        {
-            printf("%d: %d\n", i, p->type2.data);
-        }
-        else
-        {
-            printf("%d: \n", i);
-        }
+        gpio_set_level(8, 1);
+        ret = adc_digi_read_bytes(result, TIMES, &ret_num, ADC_MAX_DELAY);
+        gpio_set_level(8, 0);
+        printf("Task: %x, Read: %u\n", ret, ret_num);
+        // for (int i = 0; i < ret_num; i += 4)
+        // {
+        //     p = (void *)&result[i];
+        //     Data[count] = p->type2.data;
+        //     count++;
+        // }
+        loop++;
+    }
+    for(int i = 0; i<256;i++){
+        printf("%d : %d\n",i,Data[i]);
     }
     adc_digi_stop();
     ret = adc_digi_deinitialize();
